@@ -150,6 +150,15 @@ public class UserService {
 	public long countUsersByRole_Name(String roleName) {
 		return userRepository.countByRole_Name(roleName);
 	}
+	
+	public Page<User> findAllNonAdminUsers(Pageable pageable) {
+	    return userRepository.findByRole_IdNot(3, pageable); // role_id=3 が管理者
+	}
+
+	public Page<User> findUsersByNameLikeOrFuriganaLikeExcludingAdmin(String nameKeyword, String furiganaKeyword, Pageable pageable) {
+	    return userRepository.findByNameLikeOrFuriganaLikeAndRole_IdNot(nameKeyword, furiganaKeyword, 3, pageable);
+	}
+
 
    
    @Transactional

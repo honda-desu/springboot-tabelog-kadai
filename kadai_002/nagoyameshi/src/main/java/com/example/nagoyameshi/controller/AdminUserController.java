@@ -34,10 +34,11 @@ public class AdminUserController {
        Page<User> userPage;
 
        if (keyword != null && !keyword.isEmpty()) {
-           userPage = userService.findUsersByNameLikeOrFuriganaLike(keyword, keyword, pageable);
-       } else {
-           userPage = userService.findAllUsers(pageable);
-       }
+    	    userPage = userService.findUsersByNameLikeOrFuriganaLikeExcludingAdmin(keyword, keyword, pageable);
+    	} else {
+    	    userPage = userService.findAllNonAdminUsers(pageable);
+    	}
+
 
        model.addAttribute("userPage", userPage);
        model.addAttribute("keyword", keyword);

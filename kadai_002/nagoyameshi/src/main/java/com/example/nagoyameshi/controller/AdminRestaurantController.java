@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,7 +109,10 @@ public class AdminRestaurantController {
                         RedirectAttributes redirectAttributes,
                         Model model)
    {
-       Integer lowestPrice = restaurantRegisterForm.getLowestPrice();
+	   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	   System.out.println("ログインユーザー: " + auth.getName());
+	   auth.getAuthorities().forEach(a -> System.out.println("ロール: " + a.getAuthority()));
+	   Integer lowestPrice = restaurantRegisterForm.getLowestPrice();
        Integer highestPrice = restaurantRegisterForm.getHighestPrice();
        LocalTime openingTime = restaurantRegisterForm.getOpeningTime();
        LocalTime closingTime = restaurantRegisterForm.getClosingTime();
